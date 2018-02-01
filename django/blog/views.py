@@ -75,6 +75,7 @@ def post_delete(request, pk):
     post = POST.objects.get(pk=pk)
     post.delete()
     """
-    post = Post.objects.get(pk=pk)
-    post.delete()
-    return redirect('post-list')
+    if request.method == 'POST':
+        post = Post.objects.get(pk=pk)
+        post.delete()
+        return redirect('post-list')

@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="759cdd17-de00-41cc-b4ab-72824f5cae14" name="Default" comment="pacharm git test">
-      <change beforePath="$PROJECT_DIR$/django/blog/urls.py" afterPath="$PROJECT_DIR$/django/blog/urls.py" />
       <change beforePath="$PROJECT_DIR$/django/blog/views.py" afterPath="$PROJECT_DIR$/django/blog/views.py" />
-      <change beforePath="$PROJECT_DIR$/django/config/urls.py" afterPath="$PROJECT_DIR$/django/config/urls.py" />
       <change beforePath="$PROJECT_DIR$/django/db.sqlite3" afterPath="$PROJECT_DIR$/django/db.sqlite3" />
-      <change beforePath="$PROJECT_DIR$/django/templates/blog/post_detail.html" afterPath="$PROJECT_DIR$/django/templates/blog/post_detail.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -102,11 +99,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/django/blog/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="545">
-              <caret line="80" column="0" lean-forward="true" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+            <state relative-caret-position="560">
+              <caret line="81" column="0" lean-forward="true" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
                 <element signature="e#1966#2196#1" expanded="false" />
@@ -125,11 +122,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="post_detail.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="post_detail.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/django/templates/blog/post_detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="14" lean-forward="false" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
+            <state relative-caret-position="210">
+              <caret line="14" column="7" lean-forward="true" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -162,8 +159,8 @@
         <option value="$PROJECT_DIR$/django/config/urls.py" />
         <option value="$PROJECT_DIR$/django/blog/models.py" />
         <option value="$PROJECT_DIR$/django/blog/urls.py" />
-        <option value="$PROJECT_DIR$/django/blog/views.py" />
         <option value="$PROJECT_DIR$/django/templates/blog/post_detail.html" />
+        <option value="$PROJECT_DIR$/django/blog/views.py" />
       </list>
     </option>
   </component>
@@ -781,17 +778,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/django/blog/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="545">
-          <caret line="80" column="0" lean-forward="true" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-            <element signature="e#1966#2196#1" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/django/config/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="201">
@@ -804,9 +790,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/django/templates/blog/post_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="14" lean-forward="false" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
+        <state relative-caret-position="210">
+          <caret line="14" column="7" lean-forward="true" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/django/blog/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="560">
+          <caret line="81" column="0" lean-forward="true" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+            <element signature="e#1966#2196#1" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
