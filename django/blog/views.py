@@ -15,6 +15,7 @@ def post_list(request):
     #        blog/post_list.html파일의 내용을 가져옴
     #   7-2. 가져온 내용을 적절히 처리(렌더링, render()함수)하여 리턴
     # 8. 함수의 실행 결과(리턴값)를 브라우저로 다시 전달
+    # posts = Post.objects.order_by('-created_date')
 
     posts = Post.objects.all()
     context = {
@@ -40,6 +41,16 @@ def post_detail(request, pk):
         'blog/post_detail.html',
         context,
     )
+
+def post_edit(request, pk):
+    """
+    pk에 해당하는 Post인스턴스를
+    context라는 dict에 'post'키에 할당
+    위에서 생성한 dict는 render의 context에 전달
+    사용하는 템플릿은 'blog/post_add.html'을 재사용
+    url은 /3/edit/ 에 매칭되도록 urls.py작성
+    이 위치로 올 수 있는 a요소를 post_detail.html에 작성
+    """
 
 
 def post_add(request):
@@ -75,7 +86,11 @@ def post_delete(request, pk):
     post = POST.objects.get(pk=pk)
     post.delete()
     """
-    if request.method == 'POST':
+
+    if request.method == 'POST' :
         post = Post.objects.get(pk=pk)
-        post.delete()
-        return redirect('post-list')
+        if request.user == post.author:
+            post.delete()
+            return redirect('post-list')
+        else:
+            return redirect('post-list', pk=post.pk)
