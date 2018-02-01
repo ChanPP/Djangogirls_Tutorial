@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Post
 
 
@@ -47,4 +47,34 @@ def post_add(request):
     # 이 뷰가 실행되어서 Post add page라는 문구를 보여주도록 urls작성
     # HttpResponse가 아니라 blog/post_add.html을 출력
     # post_add.html은 base.html을 확장, title(h2)부분에 'Post add'라고 출력
-    return render(request, 'blog/post_add.html')
+    if request.method == 'POST':
+        # 요청의 method가 post일때
+        title = request.POST['title']
+        content = request.POST['content']
+        # ORM을 사용해서 title과 content에 해당하는 Post생성
+        post = Post.objects.create(
+            author=request.user,
+            title=title,
+            content=content,
+        )
+        return redirect('post-detail', pk=post.pk)
+        # return HttpResponse(f'{post.pk}, {posttitle}, {post.content}')
+    else:
+        # 요청의 method가 get일때
+        return render(request, 'blog/post_add.html')
+
+
+def post_delete(request, pk):
+    """
+    post_detail의 구조를 참고해서
+    pk에 해당하는 post를 삭제하는 view를 구현하고 url과 연결
+    pk가 3이면 url은 "3/delete/"
+    이 view는 POST메서드에 대해서만 처리한다 (request.method == 'POST')
+
+    삭제코드
+    post = POST.objects.get(pk=pk)
+    post.delete()
+    """
+    post = Post.objects.get(pk=pk)
+    post.delete()
+    return redirect('post-list')
