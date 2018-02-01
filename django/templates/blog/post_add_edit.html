@@ -9,6 +9,9 @@
 {% endblock %}
 
 {% block content %}
+<div>
+	<h3>{{ form_error }}</h3>
+</div>
 <form action="" method="POST">
 	{% csrf_token %}
 	<div class="form-group">

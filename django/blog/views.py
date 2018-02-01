@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect
 
 from .models import Post
@@ -69,21 +70,26 @@ def post_edit(request, pk):
     """
     # 현재 URL (pk가 3일경우 /3/edit/)에 전달된 pk에 해당하는 Post인스턴스를 post변수에 할당
     post = Post.objects.get(pk=pk)
+    context = {
+        'post': post,
+    }
     # 만약 POST메서드 요청일 경우
     if request.method == 'POST':
         # post의 제목/내용을 전송받은 값으로 수정 후
         title = request.POST['title']
         content = request.POST['content']
-        post.title = title
-        post.content = content
-        # DB에 저장
-        post.save()
-        # 이후 상세화면으로 이동
-        return redirect('post-detail', pk=post.pk)
+        # title과 content가 모두 있을 경우
+        if title and content:
+            post.title = title
+            post.content = content
+            # DB에 저장
+            post.save()
+            # 이후 상세화면으로 이동
+            return redirect('post-detail', pk=post.pk)
+        # title이나 content중 하나라도 빈 값일 경우, context['form_error']를 채운 뒤
+        # 아래의 GET메서드 요청과 같은 로직을 실행
+        context['form_error'] = '제목과 내용을 입력해주세요'
     # GET메서드 요청일 경우
-    context = {
-        'post': post,
-    }
     # 수정할 수 있는 페이지를 보여줌
     return render(request, 'blog/post_add_edit.html', context)
 
@@ -93,26 +99,36 @@ def post_add(request):
     # 이 뷰가 실행되어서 Post add page라는 문구를 보여주도록 urls작성
     # HttpResponse가 아니라 blog/post_add.html을 출력
     # post_add.html은 base.html을 확장, title(h2)부분에 'Post add'라고 출력
+    context = {}
     if request.method == 'POST':
         # 요청의 method가 POST일 때
         # HttpResponse로 POST요청에 담겨온
         # title과 content를 합친 문자열 데이터를 보여줌
         title = request.POST['title']
         content = request.POST['content']
-        # ORM을 사용해서 title과 content에 해당하는 Post생성
-        post = Post.objects.create(
-            author=request.user,
-            title=title,
-            content=content,
-        )
-        # post-detail이라는 URL name을 가진 뷰로
-        # 리디렉션 요청을 보냄
-        # 이 때, post-detail URL name으로 특정 URL을 만드려면
-        # pk값이 필요하므로 키워드 인수로 해당 값을 넘겨준다
-        return redirect('post-detail', pk=post.pk)
-    else:
-        # 요청의 method가 GET일 때
-        return render(request, 'blog/post_add_edit.html')
+
+        # 만약 title이나 content가 비어있으면
+        # 다시 글 작성화면으로 이동
+        # 이동시키지말고, 아래까지 내려가서 오류메세지를 출력
+        # 힌트1: 아래의 else문을 없애야합니다
+        # 힌트2: if request.method판단부분보다 위에 context객체를 만듭니다
+        # 힌트3: context로 전달된 form_error값(단순이름)을 템플릿에서 출력합니다
+        #   ex) context = {'form_error': '빈 값은 안돼요'} <- 이런식으로..
+        if title and content:
+            # ORM을 사용해서 title과 content에 해당하는 Post생성
+            post = Post.objects.create(
+                author=request.user,
+                title=title,
+                content=content,
+            )
+            # post-detail이라는 URL name을 가진 뷰로
+            # 리디렉션 요청을 보냄
+            # 이 때, post-detail URL name으로 특정 URL을 만드려면
+            # pk값이 필요하므로 키워드 인수로 해당 값을 넘겨준다
+            return redirect('post-detail', pk=post.pk)
+        context['form_error'] = '제목과 내용을 입력해주세요'
+    # 요청의 method가 GET일 때
+    return render(request, 'blog/post_add_edit.html', context)
 
 
 def post_delete(request, pk):
