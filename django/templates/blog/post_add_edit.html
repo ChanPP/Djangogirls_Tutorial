@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Post edit (pk: {{ post.pk }}){% endblock %}
+{% block title %}
+	{% if post %}
+		Post edit (pk: {{ post.pk }})
+	{% else %}
+		Post add
+	{% endif %}
+{% endblock %}
 
 {% block content %}
 <form action="" method="POST">
@@ -13,7 +19,6 @@
 			name="title"
 			class="form-control"
 			value="{{ post.title }}">
-		<!--request.POST['title']-->
 	</div>
 
 	<div class="form-group">
@@ -21,6 +26,12 @@
 		<textarea name="content" id="content" class="form-control">{{ post.content }}</textarea>
 	</div>
 
-	<button type="submit" class="btn btn-primary">수정하기</button>
+	<button type="submit" class="btn btn-primary">
+		{% if post %}
+			수정하기
+		{% else %}
+			작성하기
+		{% endif %}
+	</button>
 </form>
 {% endblock %}

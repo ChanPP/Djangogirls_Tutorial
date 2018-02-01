@@ -85,7 +85,7 @@ def post_edit(request, pk):
         'post': post,
     }
     # 수정할 수 있는 페이지를 보여줌
-    return render(request, 'blog/post_edit.html', context)
+    return render(request, 'blog/post_add_edit.html', context)
 
 
 def post_add(request):
@@ -112,7 +112,7 @@ def post_add(request):
         return redirect('post-detail', pk=post.pk)
     else:
         # 요청의 method가 GET일 때
-        return render(request, 'blog/post_add.html')
+        return render(request, 'blog/post_add_edit.html')
 
 
 def post_delete(request, pk):
