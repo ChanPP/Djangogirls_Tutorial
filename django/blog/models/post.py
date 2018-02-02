@@ -1,6 +1,10 @@
 from django.db import models
 from django.utils import timezone
 
+__all__ = (
+    'Post',
+)
+
 
 class Post(models.Model):
     author = models.ForeignKey(
@@ -17,6 +21,8 @@ class Post(models.Model):
     )
 
     class Meta:
+        verbose_name = '글'
+        verbose_name_plural = f'{verbose_name} 목록'
         ordering = ['-created_date']
 
     def publish(self):

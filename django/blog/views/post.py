@@ -1,7 +1,14 @@
-
 from django.shortcuts import render, redirect
 
-from .models import Post
+from ..models import Post
+
+__all__ = (
+    'post_list',
+    'post_add',
+    'post_delete',
+    'post_detail',
+    'post_edit',
+)
 
 
 def post_list(request):
@@ -56,6 +63,7 @@ def post_edit(request, pk):
             HTML새로 만들지 말고 있던 html을 그냥 할당
     2. url은 /<pk>/edit/ <- 에 매칭되도록 urls.py작성
     3. 이 위치로 올 수 있는 a요소를 post_detail.html에 작성 (form아님)
+
     - request.method가 POST일 때는 request.POST에 있는 데이터를 이용해서
       pk에 해당하는 Post인스턴스의 값을 수정, 이후 post-detail로 redirect
         값을 수정하는 코드
@@ -63,16 +71,16 @@ def post_edit(request, pk):
             post.title = <새 문자열>
             post.content = <새 문자열>
             post.save()  <- DB에 업데이트 됨
+
     - request.method가 GET일 때는 현재 아래에 있는 로직을 실행
+
     :param request:
     :param pk:
     :return:
     """
     # 현재 URL (pk가 3일경우 /3/edit/)에 전달된 pk에 해당하는 Post인스턴스를 post변수에 할당
     post = Post.objects.get(pk=pk)
-    context = {
-        'post': post,
-    }
+    context = {'post': post}
     # 만약 POST메서드 요청일 경우
     if request.method == 'POST':
         # post의 제목/내용을 전송받은 값으로 수정 후
@@ -138,23 +146,30 @@ def post_delete(request, pk):
     pk가 3이면 url은 "/3/delete/"
     이 view는 POST메서드에 대해서만 처리한다 (request.method == 'POST')
     (HTML 템플릿을 사용하지 않음)
+
     삭제코드
         post = Post.objects.get(pk=pk)
         post.delete()
+
     삭제 후에는 post-list로 redirect (post_add()를 참조)
+
     1. post_delete() view함수의 동작을 구현
     2. post_delete view와 연결될 urls를 blog/urls.py에 구현
     3. post_delete로 연결될 URL을 post_detail.html의 form에 작성
         csrf_token사용!
         action의 위치가 요청을 보낼 URL임
     """
+    post = Post.objects.get(pk=pk)
     if request.method == 'POST':
-        # pk에 해당하는 Post를 삭제
-        post = Post.objects.get(pk=pk)
         # 삭제 요청한 user와 post의 author가 같을때만 해당 post를 삭제
         if request.user == post.author:
+            # pk에 해당하는 Post를 삭제
             post.delete()
             # 이후 post-list라는 URL name을 갖는 view로 redirect
             return redirect('post-list')
         # 요청한 유저가 다르면 다시 글 상세화면으로 돌아옴
         return redirect('post-detail', pk=post.pk)
+    context = {
+        'post': post,
+    }
+    return render(request, 'blog/post_delete.html', context)
